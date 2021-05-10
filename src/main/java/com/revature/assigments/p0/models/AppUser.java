@@ -1,5 +1,8 @@
 package com.revature.assigments.p0.models;
 
+import com.revature.assigments.p0.screens.Screen;
+import com.revature.assigments.p0.util.ArrayList;
+
 /**
  * POJO Class to represent a User
  */
@@ -12,6 +15,8 @@ public class AppUser {
     private String firstName;
     private String lastName;
     private String email;
+    ArrayList<AppAccount> accounts = new ArrayList<>();
+
 
     public AppUser(){
         super();
@@ -73,4 +78,11 @@ public class AppUser {
         this.email = email;
     }
 
+    public ArrayList<AppAccount> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(ArrayList<AppAccount> accounts) {
+        this.accounts = accounts;
+    }
 }
