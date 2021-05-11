@@ -63,7 +63,7 @@ public class CreateAccountScreen extends Screen{
                     balance = Double.parseDouble(consoleReader.readLine());
                     AppAccount newAccount = new AppAccount(accountType,"USD",balance);
                     AccountService.save(newAccount, userTracker.getUser().getId());
-                    System.out.println("Account creation successful!");
+                    System.out.println("The account was saved successfully.");
 
                 }catch (NumberFormatException e){
                     System.out.print("Invalid input please try again!");
