@@ -18,10 +18,10 @@ public class AccountService {
         return accountDAO.getAccountTypes();
     }
 
-    public void save(AppAccount newAccount){
+    public void save(AppAccount newAccount, int userId){
 
         if(isBalanceValid(newAccount.getBalance())){
-            accountDAO.save(newAccount);
+            accountDAO.save(newAccount, userId);
         }
     }
 

@@ -33,6 +33,7 @@ public class AccountDAO {
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
             String sqlFindAccountId = "select acct_tp_id from p0_canaima.account_types where acct_type = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sqlFindAccountId, new String[] {"acct_tp_id"});
+            System.out.println("Account type in Account DAO is >>> "+accountType );
             pstmt.setString(1, accountType);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
@@ -68,7 +69,14 @@ public class AccountDAO {
 
     }
 
-    public void save(AppAccount newAccount){
+    /**
+     * This method saves the new account in two steps.
+     * First insert the account info into the accounts' table
+     * Second insert the account with its respective user info into user_accounts table
+     *
+     * @param newAccount
+     */
+    public void save(AppAccount newAccount, int userId){
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
             String sqlInsertAccount = "insert into p0_canaima.accounts (acct_tp_id, acct_balance, currency_id) values (?,?,?);";
             PreparedStatement pstmt = conn.prepareStatement(sqlInsertAccount, new String[] {"acct_id"});
@@ -82,7 +90,18 @@ public class AccountDAO {
                 ResultSet rs = pstmt.getGeneratedKeys();
                 while(rs.next()){
                     newAccount.setId(rs.getInt("acct_id"));
-                   // String sqlInsertUserAccount = ""
+                    String sqlInsertUserAccount = "insert into p0_canaima.user_accounts (user_id, acct_id) " +
+                                                    "select users.user_id , accounts.acct_id " +
+                                                    "from p0_canaima.users, p0_canaima.accounts " +
+                                                    "where users.user_id = ? and accounts.acct_id = ?;";
+                    pstmt.setInt(1,userId);
+                    pstmt.setInt(2, newAccount.getId());
+
+                    int rowsInserted2 = pstmt.executeUpdate();
+                    if(rowsInserted2 == 0){
+                        throw new SQLException("The user-account relation is broken >>> the system couldn't save it into the DB.!");
+                    }
+
                 }
             }
 
