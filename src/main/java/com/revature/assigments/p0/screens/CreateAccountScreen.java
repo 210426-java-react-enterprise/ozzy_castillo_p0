@@ -51,13 +51,13 @@ public class CreateAccountScreen extends Screen{
             for (int i = 0; i < accountTypes.size(); i++) {
                 System.out.printf("%d.-%s \n", i+1, accountTypes.get(i));
             }
+            System.out.println("Account types size >>> "+AccountService.getAccountTypes().size());
             accountType = consoleReader.readLine();
             if ( accountType !=null && Integer.parseInt(accountType) <= AccountService.getAccountTypes().size()){
                 accountType = accountTypes.get(Integer.parseInt(accountType));
 
-                System.out.print("How much would you like to deposit?: ");
-
                 try{
+                    System.out.print("How much would you like to deposit?: ");
                     balance = Double.parseDouble(consoleReader.readLine());
                     AppAccount newAccount = new AppAccount(accountType,"USD",balance);
                     AccountService.save(newAccount);

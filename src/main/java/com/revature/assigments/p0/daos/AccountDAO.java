@@ -28,13 +28,13 @@ public class AccountDAO {
         return accountTypes;
     }
 
-    public int getAccountId(String accountType){
+    public int getAccountTypeId(String accountType){
         int accountId=0;
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
             String sqlFindAccountId = "select acct_tp_id from p0_canaima.account_types where acct_type = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sqlFindAccountId, new String[] {"acct_tp_id"});
             pstmt.setString(1, accountType);
-            ResultSet rs = pstmt.executeQuery(sqlFindAccountId);
+            ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
                 accountId = rs.getInt("acct_tp_id");
                 return accountId;
@@ -51,10 +51,10 @@ public class AccountDAO {
     public int getCurrencyId(String currency){
         int currencyId=0;
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-            String sqlFindAccountId = "select acct_tp_id from p0_canaima.currencies where acct_type = ?;";
+            String sqlFindAccountId = "select currency_id from p0_canaima.currencies where curr_name = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sqlFindAccountId, new String[] {"currency_id"});
             pstmt.setString(1, currency);
-            ResultSet rs = pstmt.executeQuery(sqlFindAccountId);
+            ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
                 currencyId = rs.getInt("currency_id");
                 return currencyId;
@@ -70,11 +70,11 @@ public class AccountDAO {
 
     public void save(AppAccount newAccount){
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
-            String sqlInsertUser = "insert into p0_canaima.accounts (acct_tp_id, acct_balance, currency_id) values (?,?,?);";
-            PreparedStatement pstmt = conn.prepareStatement(sqlInsertUser, new String[] {"acct_id"});
-            pstmt.setString(1, newAccount.getAccountType());
-            pstmt.setString(2, Double.toString(newAccount.getBalance()));
-            pstmt.setString(3, newAccount.getCurrency());
+            String sqlInsertAccount = "insert into p0_canaima.accounts (acct_tp_id, acct_balance, currency_id) values (?,?,?);";
+            PreparedStatement pstmt = conn.prepareStatement(sqlInsertAccount, new String[] {"acct_id"});
+            pstmt.setInt(1,getAccountTypeId(newAccount.getAccountType()));
+            pstmt.setDouble(2, newAccount.getBalance());
+            pstmt.setInt(3,getCurrencyId(newAccount.getCurrency()));
 
             int rowsInserted = pstmt.executeUpdate();
 
@@ -82,6 +82,7 @@ public class AccountDAO {
                 ResultSet rs = pstmt.getGeneratedKeys();
                 while(rs.next()){
                     newAccount.setId(rs.getInt("acct_id"));
+                   // String sqlInsertUserAccount = ""
                 }
             }
 

@@ -19,7 +19,8 @@ public class AccountService {
     }
 
     public void save(AppAccount newAccount){
-        if(!isBalanceValid(newAccount.getBalance())){
+
+        if(isBalanceValid(newAccount.getBalance())){
             accountDAO.save(newAccount);
         }
     }
