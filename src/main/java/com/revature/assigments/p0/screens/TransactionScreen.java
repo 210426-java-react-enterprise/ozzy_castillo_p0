@@ -48,7 +48,7 @@ public class TransactionScreen extends Screen{
                     router.navigate("/checkBalance");
                     break;
                 case "3": //Withdraw
-                    router.navigate("/withdraw");
+                    router.navigate("/withdrawal");
                     break;
                 case "4": //Transfer
                     router.navigate("/transfer");
