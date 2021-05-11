@@ -35,8 +35,6 @@ public class TransactionScreen extends Screen{
         System.out.println("5.-Transactions history");
         System.out.println("6.-Exit Application");
 
-        //System.out.println("The current user id is >>>" +userTracker.getUser().getId());
-
 
         try{
             System.out.println(">> ");
