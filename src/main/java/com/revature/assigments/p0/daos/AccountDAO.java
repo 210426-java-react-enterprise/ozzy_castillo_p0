@@ -90,18 +90,19 @@ public class AccountDAO {
                 ResultSet rs = pstmt.getGeneratedKeys();
                 while(rs.next()){
                     newAccount.setId(rs.getInt("acct_id"));
-                    String sqlInsertUserAccount = "insert into p0_canaima.user_accounts (user_id, acct_id) " +
-                                                    "select users.user_id , accounts.acct_id " +
-                                                    "from p0_canaima.users, p0_canaima.accounts " +
-                                                    "where users.user_id = ? and accounts.acct_id = ?;";
-                    pstmt.setInt(1,userId);
-                    pstmt.setInt(2, newAccount.getId());
+                }
+                //For joint accounts I need to figure out how to iterate this insert per account holder
+                String sqlInsertUserAccount = "insert into p0_canaima.user_accounts (user_id, acct_id) " +
+                        "select users.user_id , accounts.acct_id " +
+                        "from p0_canaima.users, p0_canaima.accounts " +
+                        "where users.user_id = ? and accounts.acct_id = ?;";
+                PreparedStatement pstmt2 = conn.prepareStatement(sqlInsertUserAccount);
+                pstmt2.setInt(1,userId);
+                pstmt2.setInt(2, newAccount.getId());
 
-                    int rowsInserted2 = pstmt.executeUpdate();
-                    if(rowsInserted2 == 0){
-                        throw new SQLException("The user-account relation is broken >>> the system couldn't save it into the DB.!");
-                    }
-
+                int rowsInserted2 = pstmt2.executeUpdate();
+                if(rowsInserted2 == 0){
+                    throw new SQLException("The user-account relation is broken >>> the system couldn't save it into the DB.!");
                 }
             }
 

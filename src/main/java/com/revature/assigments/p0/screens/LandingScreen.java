@@ -35,11 +35,9 @@ public class LandingScreen extends Screen {
 
             switch (userSelection){
                 case "1": //Sign Up
-                    System.out.println("Navigating >>>> Sign Up Screen");
                     router.navigate("/signUp");
                     break;
                 case "2": //Sign In
-                    System.out.println("Navigating >>>> Sign In Screen");
                     router.navigate("/signIn");
                     break;
                 case "3": // Exit App

@@ -42,23 +42,18 @@ public class TransactionScreen extends Screen{
 
             switch (userSelection){
                 case "1": //Create Account
-                    System.out.println("Navigating >>>> Create Account");
                     router.navigate("createAccount", this.userTracker);
                     break;
                 case "2": //Check Balance
-                    System.out.println("Navigating >>>> Check Balance");
                     router.navigate("/checkBalance");
                     break;
                 case "3": //Withdraw
-                    System.out.println("Navigating >>>> Withdraw");
                     router.navigate("/withdraw");
                     break;
                 case "4": //Transfer
-                    System.out.println("Navigating >>>> Transfer");
                     router.navigate("/transfer");
                     break;
                 case "5": //Transaction history
-                    System.out.println("Navigating >>>> Transaction history");
                     router.navigate("/transactionHistory");
                     break;
                 case "6": // Exit App
