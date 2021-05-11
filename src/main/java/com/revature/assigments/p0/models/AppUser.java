@@ -15,7 +15,7 @@ public class AppUser {
     private String firstName;
     private String lastName;
     private String email;
-    ArrayList<AppAccount> accounts = new ArrayList<>();
+    private ArrayList<AppAccount> accounts = new ArrayList<>();
 
 
     public AppUser(){

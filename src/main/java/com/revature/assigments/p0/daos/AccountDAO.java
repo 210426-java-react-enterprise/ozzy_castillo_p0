@@ -130,19 +130,21 @@ public class AccountDAO {
                                                 "on a.acct_id = ua.acct_id where ua.user_id = ?;";
             */
             String sqlFindUserAccounts = "select a.acct_id, at2.acct_type, a.acct_balance, c.curr_name " +
-                                            "from p0_canaima.accounts a" +
-                                            "left join p0_canaima.account_types at2" +
-                                            "on a.acct_tp_id = at2.acct_tp_id" +
+                                            "from p0_canaima.accounts a " +
+                                            "left join p0_canaima.account_types at2 " +
+                                            "on a.acct_tp_id = at2.acct_tp_id " +
                                             "left join p0_canaima.currencies c " +
                                             "on a.currency_id = c.currency_id " +
-                                            "left join p0_canaima.user_accounts ua" +
+                                            "left join p0_canaima.user_accounts ua " +
                                             "on a.acct_id = ua.acct_id " +
-                                            "where ua.user_id = ?;";
+                                            "where ua.user_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(sqlFindUserAccounts);
             pstmt.setInt(1, userId);
 
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()){
+                account = new AppAccount();
+                userAccounts = new ArrayList<>();
                 account.setId(rs.getInt("acct_id"));
                 account.setAccountType(rs.getString("acct_type"));
                 account.setBalance(rs.getDouble("acct_balance"));
