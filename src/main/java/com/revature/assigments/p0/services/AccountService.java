@@ -18,4 +18,18 @@ public class AccountService {
         return accountDAO.getAccountTypes();
     }
 
+    public void save(AppAccount newAccount){
+        if(!isBalanceValid(newAccount.getBalance())){
+            accountDAO.save(newAccount);
+        }
+    }
+
+    public boolean isBalanceValid(Double balance){
+        if (balance > 0){
+            return true;
+        }
+        return false;
+    }
+
+
 }

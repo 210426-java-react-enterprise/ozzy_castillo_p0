@@ -1,5 +1,6 @@
 package com.revature.assigments.p0.screens;
 
+import com.revature.assigments.p0.models.AppAccount;
 import com.revature.assigments.p0.models.AppUser;
 import com.revature.assigments.p0.services.AccountService;
 import com.revature.assigments.p0.services.UserService;
@@ -33,44 +34,49 @@ public class CreateAccountScreen extends Screen{
 
     @Override
     public void render() {
-        /*
+
         ArrayList<String> accountTypes;
+        String accountType;
+        double balance;
 
 
         try{
 
             // I need to bring from DB my account types
 
-
-            accountTypes = AccountService
-
             System.out.println("       << Create an Account >>       ");
             System.out.println("-------------------------------------");
+            System.out.println("What type account do you want to create?");
+            accountTypes = AccountService.getAccountTypes();
+            for (int i = 0; i < accountTypes.size(); i++) {
+                System.out.printf("%d.-%s \n", i+1, accountTypes.get(i));
+            }
+            accountType = consoleReader.readLine();
+            if ( accountType !=null && Integer.parseInt(accountType) <= AccountService.getAccountTypes().size()){
+                accountType = accountTypes.get(Integer.parseInt(accountType));
 
+                System.out.print("How much would you like to deposit?: ");
 
+                try{
+                    balance = Double.parseDouble(consoleReader.readLine());
+                    AppAccount newAccount = new AppAccount(accountType,"USD",balance);
+                    AccountService.save(newAccount);
+                    System.out.println("Account creation successful!");
 
-            System.out.print("");
-            us = consoleReader.readLine();
+                }catch (NumberFormatException e){
+                    System.out.print("Invalid input please try again!");
+                }
 
-            System.out.print("Password: ");
-            password = consoleReader.readLine();
-
-            AppUser currentUser = userService.signIn(username,password);
-            if (currentUser!= null){
-                System.out.println("Login successful!!");
-                this.userTracker = new UserTracker(currentUser);
-                router.navigate("/transaction", this.userTracker); // I'm calling the overloading method to pass the UserTracker
             }else{
-                System.out.println("The email or password is incorrect.");
+                System.out.println("Invalid Selection!");
             }
 
+        }catch(Exception e){
 
-        }catch(IOException e){
-
-            e.printStackTrace(); // This is exception for readline method
+            e.printStackTrace(); // This is exception for readLine method
         }
 
-    */
+
     }
 
 }
