@@ -47,14 +47,14 @@ public class CreateAccountScreen extends Screen{
             System.out.println("       << Create an Account >>       ");
             System.out.println("-------------------------------------");
             System.out.println("What type account do you want to create?");
-            accountTypes = AccountService.getAccountTypes();
+            accountTypes = AccountService.findAccountTypes();
             for (int i = 0; i < accountTypes.size(); i++) {
                 System.out.printf("%d.-%s \n", i+1, accountTypes.get(i));
             }
 
             accountType = consoleReader.readLine();
 
-            if ( accountType !=null && Integer.parseInt(accountType) <= AccountService.getAccountTypes().size()){
+            if ( accountType !=null && Integer.parseInt(accountType) <= AccountService.findAccountTypes().size()){
 
                 accountType = accountTypes.get((Integer.parseInt(accountType))-1);
 
@@ -62,7 +62,9 @@ public class CreateAccountScreen extends Screen{
                     System.out.print("How much would you like to deposit?: ");
                     balance = Double.parseDouble(consoleReader.readLine());
                     AppAccount newAccount = new AppAccount(accountType,"USD",balance);
-                    AccountService.save(newAccount, userTracker.getUser().getId());
+                    //AccountService.save(newAccount, userTracker.getUser().getId());
+                    AccountService.save(newAccount, userTracker);
+                    //I need to update userTracker.user.Accounts
                     System.out.println("The account was saved successfully.");
 
                 }catch (NumberFormatException e){

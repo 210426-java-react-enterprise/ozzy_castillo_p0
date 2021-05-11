@@ -10,13 +10,13 @@ public class UserTracker {
 
 
     private AppUser user;
-    private ArrayList<AppAccount> userAccounts;
+
 
     public UserTracker(AppUser user){ this.user = user;}
 
     public UserTracker(AppUser user, ArrayList<AppAccount> userAccounts) {
         this.user = user;
-        this.userAccounts = userAccounts;
+        //this.userAccounts = userAccounts;
     }
 
     public AppUser getUser() {
@@ -28,10 +28,11 @@ public class UserTracker {
     }
 
     public ArrayList<AppAccount> getUserAccounts() {
-        return userAccounts;
+        return user.getAccounts();
     }
 
     public void setUserAccounts(ArrayList<AppAccount> userAccounts) {
-        this.userAccounts = userAccounts;
+        this.user.setAccounts(userAccounts);
     }
+
 }

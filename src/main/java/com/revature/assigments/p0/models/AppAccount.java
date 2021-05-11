@@ -18,6 +18,13 @@ public class AppAccount {
         this.balance = balance;
     }
 
+    public AppAccount(int id, String accountType, String currency, double balance) {
+        this.id = id;
+        this.accountType = accountType;
+        this.currency = currency;
+        this.balance = balance;
+    }
+
     public int getId() {
         return id;
     }

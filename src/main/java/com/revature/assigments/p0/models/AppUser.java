@@ -85,4 +85,8 @@ public class AppUser {
     public void setAccounts(ArrayList<AppAccount> accounts) {
         this.accounts = accounts;
     }
+
+    public void addAccountToUser(AppAccount account){
+        this.accounts.add(account);
+    }
 }

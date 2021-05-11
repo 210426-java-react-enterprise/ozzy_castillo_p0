@@ -3,6 +3,7 @@ package com.revature.assigments.p0.daos;
 import com.revature.assigments.p0.models.AppAccount;
 import com.revature.assigments.p0.util.ArrayList;
 import com.revature.assigments.p0.util.ConnectionFactory;
+import com.revature.assigments.p0.util.UserTracker;
 
 import java.sql.*;
 
@@ -11,7 +12,7 @@ import java.sql.*;
  */
 public class AccountDAO {
 
-    public ArrayList<String> getAccountTypes(){
+    public ArrayList<String> findAccountTypes(){
         ArrayList<String> accountTypes = new ArrayList<>();
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
             String sqlFindAccountTypes = "select acct_type from p0_canaima.account_types;";
@@ -28,7 +29,7 @@ public class AccountDAO {
         return accountTypes;
     }
 
-    public int getAccountTypeId(String accountType){
+    public int findAccountTypeId(String accountType){
         int accountId=0;
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
             String sqlFindAccountId = "select acct_tp_id from p0_canaima.account_types where acct_type = ?;";
@@ -49,7 +50,7 @@ public class AccountDAO {
 
     }
 
-    public int getCurrencyId(String currency){
+    public int findCurrencyId(String currency){
         int currencyId=0;
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
             String sqlFindAccountId = "select currency_id from p0_canaima.currencies where curr_name = ?;";
@@ -76,13 +77,13 @@ public class AccountDAO {
      *
      * @param newAccount
      */
-    public void save(AppAccount newAccount, int userId){
+    public void save(AppAccount newAccount, UserTracker userTracker){
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
             String sqlInsertAccount = "insert into p0_canaima.accounts (acct_tp_id, acct_balance, currency_id) values (?,?,?);";
             PreparedStatement pstmt = conn.prepareStatement(sqlInsertAccount, new String[] {"acct_id"});
-            pstmt.setInt(1,getAccountTypeId(newAccount.getAccountType()));
+            pstmt.setInt(1,findAccountTypeId(newAccount.getAccountType()));
             pstmt.setDouble(2, newAccount.getBalance());
-            pstmt.setInt(3,getCurrencyId(newAccount.getCurrency()));
+            pstmt.setInt(3,findCurrencyId(newAccount.getCurrency()));
 
             int rowsInserted = pstmt.executeUpdate();
 
@@ -96,12 +97,15 @@ public class AccountDAO {
                         "select users.user_id , accounts.acct_id " +
                         "from p0_canaima.users, p0_canaima.accounts " +
                         "where users.user_id = ? and accounts.acct_id = ?;";
+
                 PreparedStatement pstmt2 = conn.prepareStatement(sqlInsertUserAccount);
-                pstmt2.setInt(1,userId);
+                pstmt2.setInt(1,userTracker.getUser().getId());
                 pstmt2.setInt(2, newAccount.getId());
 
                 int rowsInserted2 = pstmt2.executeUpdate();
-                if(rowsInserted2 == 0){
+                if(rowsInserted2 != 0){
+                    userTracker.getUser().addAccountToUser(newAccount);
+                }else {
                     throw new SQLException("The user-account relation is broken >>> the system couldn't save it into the DB.!");
                 }
             }
@@ -111,6 +115,45 @@ public class AccountDAO {
             throwables.printStackTrace();
         }
 
+    }
+
+    public ArrayList<AppAccount> findUserAccountsById(int userId){
+
+        ArrayList<AppAccount> userAccounts = null;
+        AppAccount account = null;
+
+        try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+
+            /*
+            String sqlFindUserAccounts = "select * from p0_canaima.accounts a " +
+                                            "inner join p0_canaima.user_accounts ua " +
+                                                "on a.acct_id = ua.acct_id where ua.user_id = ?;";
+            */
+            String sqlFindUserAccounts = "select a.acct_id, at2.acct_type, a.acct_balance, c.curr_name " +
+                                            "from p0_canaima.accounts a" +
+                                            "left join p0_canaima.account_types at2" +
+                                            "on a.acct_tp_id = at2.acct_tp_id" +
+                                            "left join p0_canaima.currencies c " +
+                                            "on a.currency_id = c.currency_id " +
+                                            "left join p0_canaima.user_accounts ua" +
+                                            "on a.acct_id = ua.acct_id " +
+                                            "where ua.user_id = ?;";
+            PreparedStatement pstmt = conn.prepareStatement(sqlFindUserAccounts);
+            pstmt.setInt(1, userId);
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()){
+                account.setId(rs.getInt("acct_id"));
+                account.setAccountType(rs.getString("acct_type"));
+                account.setBalance(rs.getDouble("acct_balance"));
+                account.setCurrency(rs.getString("curr_name"));
+                userAccounts.add(account);
+            }
+
+        }catch(SQLException throwables){
+            throwables.printStackTrace();
+        }
+        return userAccounts;
     }
 
 }

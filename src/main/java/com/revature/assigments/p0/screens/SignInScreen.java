@@ -1,6 +1,7 @@
 package com.revature.assigments.p0.screens;
 
 import com.revature.assigments.p0.models.AppUser;
+import com.revature.assigments.p0.services.AccountService;
 import com.revature.assigments.p0.services.UserService;
 import com.revature.assigments.p0.util.ScreenRouter;
 import com.revature.assigments.p0.util.UserTracker;
@@ -11,16 +12,18 @@ import java.io.IOException;
 public class SignInScreen extends Screen{
 
     private BufferedReader consoleReader;
-    private UserService userService;
     private ScreenRouter router;
+    private UserService userService;
+    private AccountService accountService;
 
 
 
-    public SignInScreen(BufferedReader consoleReader,ScreenRouter router,UserService userService) {
+    public SignInScreen(BufferedReader consoleReader, ScreenRouter router, UserService userService, AccountService accountService) {
         super("SignInScreen","/signIn");
         this.consoleReader = consoleReader;
         this.router = router;
         this.userService = userService;
+        this.accountService = accountService;
     }
 
     @Override
@@ -45,6 +48,7 @@ public class SignInScreen extends Screen{
             if (currentUser!= null){
                 System.out.println("Login successful!!");
                 this.userTracker = new UserTracker(currentUser);
+                this.userTracker.getUser().setAccounts(accountService.findUserAccountsByUserId(currentUser.getId()));
                 router.navigate("/transaction", this.userTracker); // I'm calling the overloading method to pass the UserTracker
             }else{
                 System.out.println("The email or password is incorrect.");

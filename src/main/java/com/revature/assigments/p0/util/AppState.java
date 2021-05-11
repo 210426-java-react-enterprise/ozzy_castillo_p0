@@ -35,9 +35,10 @@ public class AppState {
         router = new ScreenRouter();
         router.addScreen(new LandingScreen(consoleReader,router))
                 .addScreen(new SignUpScreen(consoleReader, userService))
-                .addScreen(new SignInScreen(consoleReader, router, userService))
+                .addScreen(new SignInScreen(consoleReader, router, userService, accountService))
                 .addScreen(new TransactionScreen(consoleReader, router, userTracker))
-                .addScreen(new CreateAccountScreen(consoleReader, router, accountService, userTracker)); // Here I can add more screens
+                .addScreen(new CreateAccountScreen(consoleReader, router, accountService, userTracker))
+                .addScreen(new CheckBalanceScreen(consoleReader, router, accountService ,userTracker)); // Here I can add more screens
 
         System.out.println("Application initialized!");
     }
