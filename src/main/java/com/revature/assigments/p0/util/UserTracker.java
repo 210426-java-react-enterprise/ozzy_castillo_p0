@@ -14,11 +14,6 @@ public class UserTracker {
 
     public UserTracker(AppUser user){ this.user = user;}
 
-    public UserTracker(AppUser user, ArrayList<AppAccount> userAccounts) {
-        this.user = user;
-        //this.userAccounts = userAccounts;
-    }
-
     public AppUser getUser() {
         return user;
     }
@@ -31,8 +26,5 @@ public class UserTracker {
         return user.getAccounts();
     }
 
-    public void setUserAccounts(ArrayList<AppAccount> userAccounts) {
-        this.user.setAccounts(userAccounts);
-    }
 
 }

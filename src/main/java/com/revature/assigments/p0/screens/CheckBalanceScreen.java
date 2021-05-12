@@ -26,9 +26,20 @@ public class CheckBalanceScreen extends Screen{
 
         System.out.println("     << Check Balance Account >>     ");
         System.out.println("-------------------------------------");
-        System.out.println("What account would you like to check the balance?");
+        if (userTracker.getUser().getAccounts().size() > 1){
+            System.out.println("Here are the balances of your accounts:");
+            System.out.println("-------------------------------------");
+        }else{
+            System.out.println("Here is the balance of your account:");
+            System.out.println("-------------------------------------");
+        }
+
         for (int i = 0; i <  userTracker.getUser().getAccounts().size(); i++){
-            System.out.printf("%d.-Account#%d >>>  %s\n", i+1, userTracker.getUser().getAccounts().get(i).getId(), userTracker.getUserAccounts().get(i).getAccountType());
+            System.out.format("%d.-Account# %d Type: %s Your Balance is $ %.2f%n\n",
+                    i+1,
+                    userTracker.getUser().getAccounts().get(i).getId(),
+                    userTracker.getUser().getAccounts().get(i).getAccountType(),
+                    userTracker.getUser().getAccounts().get(i).getBalance());
         }
 
         //accountType = consoleReader.readLine();

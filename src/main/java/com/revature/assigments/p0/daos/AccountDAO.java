@@ -141,10 +141,11 @@ public class AccountDAO {
             pstmt.setInt(1, userId);
 
             ResultSet rs = pstmt.executeQuery();
-            account = new AppAccount();
+
             userAccounts = new ArrayList<>();
             int line = 0;
             while (rs.next()){
+                account = new AppAccount();
                 account.setId(rs.getInt("acct_id"));
                 account.setAccountType(rs.getString("acct_type"));
                 account.setBalance(rs.getDouble("acct_balance"));
