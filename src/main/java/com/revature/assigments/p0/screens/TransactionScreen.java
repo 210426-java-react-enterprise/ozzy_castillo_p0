@@ -45,7 +45,7 @@ public class TransactionScreen extends Screen{
                     router.navigate("createAccount", this.userTracker);
                     break;
                 case "2": //Check Balance
-                    router.navigate("/checkBalance");
+                    router.navigate("/checkBalance", this.userTracker);
                     break;
                 case "3": //Withdraw
                     router.navigate("/withdrawal");

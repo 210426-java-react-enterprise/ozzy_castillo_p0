@@ -27,8 +27,7 @@ public class CheckBalanceScreen extends Screen{
         System.out.println("     << Check Balance Account >>     ");
         System.out.println("-------------------------------------");
         System.out.println("What account would you like to check the balance?");
-        System.out.println("Array of Account in CheckBalance Screen is >> " + userTracker.getUser().getAccounts().size() );
-        for (int i = 0; i <  userTracker.getUser().getAccounts().size() -1; i++){
+        for (int i = 0; i <  userTracker.getUser().getAccounts().size(); i++){
             System.out.printf("%d.-Account#%d >>>  %s\n", i+1, userTracker.getUser().getAccounts().get(i).getId(), userTracker.getUserAccounts().get(i).getAccountType());
         }
 

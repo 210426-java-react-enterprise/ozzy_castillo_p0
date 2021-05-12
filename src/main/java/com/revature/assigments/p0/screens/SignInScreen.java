@@ -49,6 +49,14 @@ public class SignInScreen extends Screen{
                 System.out.println("Login successful!!");
                 this.userTracker = new UserTracker(currentUser);
                 this.userTracker.getUser().setAccounts(accountService.findUserAccountsByUserId(currentUser.getId()));
+
+                /*
+                for (int i = 0; i < this.userTracker.getUser().getAccounts().size(); i++) {
+                    System.out.println("i value in SignIn >>"+i);
+                    System.out.println("Array Size value in SignIn >>"+this.userTracker.getUser().getAccounts().size());
+                    System.out.printf("Sign In Account info Account # %d Type: %s", this.userTracker.getUser().getAccounts().get(i).getId() ,this.userTracker.getUser().getAccounts().get(i).getAccountType() +"\n" );
+                }
+                */
                 router.navigate("/transaction", this.userTracker); // I'm calling the overloading method to pass the UserTracker
             }else{
                 System.out.println("The email or password is incorrect.");

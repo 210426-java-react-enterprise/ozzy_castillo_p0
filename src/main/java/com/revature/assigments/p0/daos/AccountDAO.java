@@ -103,9 +103,8 @@ public class AccountDAO {
                 pstmt2.setInt(2, newAccount.getId());
 
                 int rowsInserted2 = pstmt2.executeUpdate();
-                if(rowsInserted2 != 0){
-                    userTracker.getUser().addAccountToUser(newAccount);
-                }else {
+                if(rowsInserted2 != 0) userTracker.getUser().addAccountToUser(newAccount);
+                else {
                     throw new SQLException("The user-account relation is broken >>> the system couldn't save it into the DB.!");
                 }
             }
@@ -120,7 +119,7 @@ public class AccountDAO {
     public ArrayList<AppAccount> findUserAccountsById(int userId){
 
         ArrayList<AppAccount> userAccounts = null;
-        AppAccount account = null;
+        AppAccount account;
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 
@@ -142,19 +141,23 @@ public class AccountDAO {
             pstmt.setInt(1, userId);
 
             ResultSet rs = pstmt.executeQuery();
+            account = new AppAccount();
+            userAccounts = new ArrayList<>();
+            int line = 0;
             while (rs.next()){
-                account = new AppAccount();
-                userAccounts = new ArrayList<>();
                 account.setId(rs.getInt("acct_id"));
                 account.setAccountType(rs.getString("acct_type"));
                 account.setBalance(rs.getDouble("acct_balance"));
                 account.setCurrency(rs.getString("curr_name"));
+
+
                 userAccounts.add(account);
             }
 
         }catch(SQLException throwables){
             throwables.printStackTrace();
         }
+
         return userAccounts;
     }
 

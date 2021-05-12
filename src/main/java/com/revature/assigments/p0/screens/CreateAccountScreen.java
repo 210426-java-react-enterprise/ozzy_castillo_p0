@@ -62,10 +62,10 @@ public class CreateAccountScreen extends Screen{
                     System.out.print("How much would you like to deposit?: ");
                     balance = Double.parseDouble(consoleReader.readLine());
                     AppAccount newAccount = new AppAccount(accountType,"USD",balance);
-                    //AccountService.save(newAccount, userTracker.getUser().getId());
                     AccountService.save(newAccount, userTracker);
-                    //I need to update userTracker.user.Accounts
                     System.out.println("The account was saved successfully.");
+
+                    router.navigate("/transaction", this.userTracker);
 
                 }catch (NumberFormatException e){
                     System.out.print("Invalid input please try again!");
