@@ -27,7 +27,7 @@ public class DepositScreen extends Screen{
 
         System.out.println("            << Deposit >>            ");
         System.out.println("-------------------------------------");
-        if (userTracker.getUser().getAccounts().size() > 1){
+        if (userTracker.getUser().getAccounts().size() > 0){
             System.out.println("In which account would you like to deposit? ");
             System.out.println("--------------------------------------------");
             for (int i = 0; i <  userTracker.getUser().getAccounts().size(); i++){
@@ -41,7 +41,7 @@ public class DepositScreen extends Screen{
                 System.out.print(">> ");
                 String accountUserSelection = consoleReader.readLine();
                 if(!AccountService.isValidAccountNumber(Integer.parseInt(accountUserSelection), userTracker.getUser().getAccounts())){
-                    throw new IllegalArgumentException("Your selection is invalid!");
+                    throw new IllegalArgumentException("Your selection is invalid, please use the Account # instead!");
                 }
                 System.out.println("How much would you like to deposit? ");
                 System.out.print(">> ");
@@ -58,7 +58,7 @@ public class DepositScreen extends Screen{
                     }
 
                 }
-
+                System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                 System.out.printf("Are you planning to deposit $ %.2f%n into your Account # %s Type: %s",
                                         Double.parseDouble(amountToDeposit), accountUserSelection,
                                         userTracker.getUser().getAccounts().get(accountIndex).getAccountType()+"\n");
@@ -79,16 +79,27 @@ public class DepositScreen extends Screen{
                         userTracker.getUser().getAccounts().get(accountIndex).addToBalance(Double.parseDouble(amountToDeposit));
                         System.out.println("Your deposit was completed successfully!");
                     }else{
-                        throw new IllegalArgumentException("Invalid Selection!");
+                        throw new IllegalArgumentException("Your selection is invalid, please use the Account #");
                     }
                 }else{
-                    throw new IllegalArgumentException("Invalid Selection!");
+                    throw new IllegalArgumentException();
                 }
 
             } catch (IllegalArgumentException e) {
-                System.out.println(">>>>> Your selection is invalid, please use the Account #");
-                this.render();
-                e.printStackTrace();
+                System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                if (e.getMessage()!=null)System.out.println(">>>>> "+e.getMessage());
+                System.out.println(">>>>> Are you planning to continue with your deposit?");
+                System.out.printf(">>>>> (yes or no) >> ");
+                try{
+                    String userConfirm = consoleReader.readLine();
+                    if ( userConfirm.trim().toLowerCase().equals("yes")){
+                        this.render();
+                    }
+
+                } catch (IOException e3){
+                    e3.printStackTrace();
+                }
+
             } catch (IOException e2){
                 e2.printStackTrace();
             }

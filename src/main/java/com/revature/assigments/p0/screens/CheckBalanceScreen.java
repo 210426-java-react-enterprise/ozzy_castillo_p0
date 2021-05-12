@@ -22,11 +22,11 @@ public class CheckBalanceScreen extends Screen{
 
     @Override
     public void render() {
-        int arraySize = userTracker.getUser().getAccounts().size();
-        if ( arraySize > 0){
+
+        if ( userTracker.getUser().getAccounts().size() > 0){
             System.out.println("     << Check Balance Account >>     ");
             System.out.println("-------------------------------------");
-            if ( arraySize> 1){
+            if ( userTracker.getUser().getAccounts().size() > 1){
                 System.out.println("Here are the balances of your accounts:");
                 System.out.println("-------------------------------------");
             }else{

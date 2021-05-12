@@ -22,9 +22,9 @@ public class WithdrawalScreen extends Screen{
     @Override
     public void render() {
 
-        System.out.println("            << Withdrawl >>            ");
+        System.out.println("            << Withdrawal >>         ");
         System.out.println("-------------------------------------");
-        if (userTracker.getUser().getAccounts().size() > 1){
+        if (userTracker.getUser().getAccounts().size() > 0){
             System.out.println("From which account would you like to withdrawal? ");
             System.out.println("--------------------------------------------");
             for (int i = 0; i <  userTracker.getUser().getAccounts().size(); i++){
