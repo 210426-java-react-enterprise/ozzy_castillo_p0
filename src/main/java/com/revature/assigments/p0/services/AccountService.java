@@ -60,7 +60,9 @@ public class AccountService {
     }
 
     public boolean isValidWithdrawal(double amount, double balance){
-        if((balance-=amount) < 0)return false;
+        if(amount < 0)return false;
+
+        if((balance-=amount) < 0 ) return false;
 
         return true;
     }
