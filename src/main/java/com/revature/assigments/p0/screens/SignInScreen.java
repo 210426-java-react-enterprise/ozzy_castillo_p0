@@ -1,5 +1,6 @@
 package com.revature.assigments.p0.screens;
 
+import com.revature.assigments.p0.exceptions.invalidRequestedException;
 import com.revature.assigments.p0.models.AppUser;
 import com.revature.assigments.p0.services.AccountService;
 import com.revature.assigments.p0.services.UserService;
@@ -60,12 +61,36 @@ public class SignInScreen extends Screen{
                 router.navigate("/transaction", this.userTracker); // I'm calling the overloading method to pass the UserTracker
             }else{
                 System.out.println("The email or password is incorrect.");
+                System.out.print("Would you like to try again?");
+                System.out.printf("(yes or no) >> ");
+                try {
+                    String userConfirm = consoleReader.readLine();
+                    if ( userConfirm.trim().toLowerCase().equals("yes")){
+                        this.render();
+                    }
+
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
 
 
-        }catch(IOException e){
+        }catch(invalidRequestedException e){
+            System.out.println(e.getMessage()); // This is exception for readline method
+            System.out.print("Would you like to try again?");
+            System.out.printf("(yes or no) >> ");
+            try {
+                String userConfirm = consoleReader.readLine();
+                if ( userConfirm.trim().toLowerCase().equals("yes")){
+                    this.render();
+                }
 
-            e.printStackTrace(); // This is exception for readline method
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+
+        }catch(IOException e2){
+            e2.printStackTrace(); // This is exception for readline method
         }
 
 

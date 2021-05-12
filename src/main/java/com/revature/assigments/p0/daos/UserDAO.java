@@ -16,11 +16,11 @@ public class UserDAO {
 
     public void save(AppUser newUser){
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-            String sqlInsertUser = "insert into p0_canaima.users(username, password, first_name, last_name, email values (?,?,?,?,?);";
+            String sqlInsertUser = "insert into p0_canaima.users(username, password, first_name, last_name, email) values (?,?,?,?,?);";
             PreparedStatement pstmt = conn.prepareStatement(sqlInsertUser, new String[] {"user_id"});
             pstmt.setString(1, newUser.getUsername());
             pstmt.setString(2, newUser.getPassword());
-            pstmt.setString(3,newUser.getFirstName());
+            pstmt.setString(3, newUser.getFirstName());
             pstmt.setString(4, newUser.getLastName());
             pstmt.setString(5, newUser.getEmail());
             int rowsInserted = pstmt.executeUpdate();

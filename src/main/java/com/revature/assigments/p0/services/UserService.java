@@ -74,7 +74,9 @@ public class UserService {
     public AppUser signIn(String username, String password){
         AppUser user = null;
 
-        if (username == null || username.trim().isEmpty() || username.trim().length() > 25) return user;
+        if (username == null || username.trim().isEmpty() || username.trim().length() > 25) {
+            throw new invalidRequestedException("Invalid user data provided!");
+        }
 
         user = userDAO.findUserByUsernameAndPassword(username, password);
 

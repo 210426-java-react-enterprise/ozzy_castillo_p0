@@ -1,5 +1,6 @@
 package com.revature.assigments.p0.screens;
 
+import com.revature.assigments.p0.exceptions.invalidRequestedException;
 import com.revature.assigments.p0.models.AppUser;
 import com.revature.assigments.p0.services.UserService;
 import com.revature.assigments.p0.util.ScreenRouter;
@@ -55,10 +56,25 @@ public class SignUpScreen extends Screen{
 
             userService.signUp(newUser);
 
-            //this.render();
+
+        }catch(invalidRequestedException e){
+            System.out.println(e.getMessage()); // This is exception for readline method
+            System.out.print("Would you like to try again?");
+            System.out.printf("(yes or no) >> ");
+            try {
+                String userConfirm = consoleReader.readLine();
+                if ( userConfirm.trim().toLowerCase().equals("yes")){
+                    this.render();
+                }
+
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+
 
         }catch(IOException e){
-            e.printStackTrace(); // This is exception for readline method
+           e.printStackTrace();
+
         }
 
 
