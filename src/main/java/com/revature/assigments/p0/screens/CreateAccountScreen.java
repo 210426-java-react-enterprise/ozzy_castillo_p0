@@ -26,7 +26,7 @@ public class CreateAccountScreen extends Screen{
 
 
     public CreateAccountScreen(BufferedReader consoleReader, ScreenRouter router, AccountService accountService,UserTracker userTracker) {
-        super("TransactionScreen","/transaction",userTracker);
+        super("CreateAccountScreen","/createAccount",userTracker);
         this.consoleReader = consoleReader;
         this.router = router;
         this.AccountService = accountService;

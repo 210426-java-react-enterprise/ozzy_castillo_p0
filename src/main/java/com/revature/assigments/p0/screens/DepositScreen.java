@@ -93,8 +93,7 @@ public class DepositScreen extends Screen{
                 e2.printStackTrace();
             }
         }else{
-            System.out.println("Please create an account to be able to deposit");
-            System.out.println("-----------------------------------------------");
+            System.out.println(">>>>> Please create an account to be able to deposit");
         }
 
 

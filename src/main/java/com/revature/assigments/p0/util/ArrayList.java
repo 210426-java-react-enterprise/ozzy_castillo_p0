@@ -81,35 +81,15 @@ public class ArrayList<T> implements List<T> {
         int evalSize = 0;
 
         while( iteArray[evalSize]!= null){
-            if(evalSize ==0)evalSize=1;
-
-                evalSize++;
+            evalSize++;
             }
 
-            /*
-            for (int i = 0; i < iteArray.length ; i++) {
-                System.out.println(i);
-                if(iteArray[i].data != null){
-                    eval_size++;
-                }
-            }
-            */
-            //System.out.println("Testing Size Method >> " + evalSize);
             return evalSize;
         }
     @Override
     public void sort (T data){
 
         }
-
-        /*
-        private Iterator[] grow(Iterator[] IteArray){
-            int newSize = arraySize*2;
-            Iterator[] newIteArray = new Iterator[newSize];
-            newIteArray.
-
-        }
-        */
 
         //Inner class to describe the data structure iterator
         private static class Iterator<T>{

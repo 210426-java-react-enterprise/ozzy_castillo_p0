@@ -22,25 +22,29 @@ public class CheckBalanceScreen extends Screen{
 
     @Override
     public void render() {
-
-
-        System.out.println("     << Check Balance Account >>     ");
-        System.out.println("-------------------------------------");
-        if (userTracker.getUser().getAccounts().size() > 1){
-            System.out.println("Here are the balances of your accounts:");
+        int arraySize = userTracker.getUser().getAccounts().size();
+        if ( arraySize > 0){
+            System.out.println("     << Check Balance Account >>     ");
             System.out.println("-------------------------------------");
+            if ( arraySize> 1){
+                System.out.println("Here are the balances of your accounts:");
+                System.out.println("-------------------------------------");
+            }else{
+                System.out.println("Here is the balance of your account:");
+                System.out.println("-------------------------------------");
+            }
+
+            for (int i = 0; i <  userTracker.getUser().getAccounts().size(); i++){
+                System.out.format("%d.-Account# %d Type: %s Your Balance is $ %.2f%n\n",
+                        i+1,
+                        userTracker.getUser().getAccounts().get(i).getId(),
+                        userTracker.getUser().getAccounts().get(i).getAccountType(),
+                        userTracker.getUser().getAccounts().get(i).getBalance());
+            }
         }else{
-            System.out.println("Here is the balance of your account:");
-            System.out.println("-------------------------------------");
+            System.out.println(">>>>> Please create an account, you don't have an account to check!");
         }
 
-        for (int i = 0; i <  userTracker.getUser().getAccounts().size(); i++){
-            System.out.format("%d.-Account# %d Type: %s Your Balance is $ %.2f%n\n",
-                    i+1,
-                    userTracker.getUser().getAccounts().get(i).getId(),
-                    userTracker.getUser().getAccounts().get(i).getAccountType(),
-                    userTracker.getUser().getAccounts().get(i).getBalance());
-        }
 
         router.navigate("/transaction", this.userTracker);
     }
