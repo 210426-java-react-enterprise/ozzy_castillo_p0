@@ -30,7 +30,7 @@ public class LandingScreen extends Screen {
         System.out.println("3.-Exit Application");
 
         try{
-            System.out.println(">> ");
+            System.out.printf(">> ");
             String userSelection = consoleReader.readLine();
 
             switch (userSelection){

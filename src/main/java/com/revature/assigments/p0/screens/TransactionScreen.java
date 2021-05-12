@@ -37,7 +37,7 @@ public class TransactionScreen extends Screen{
 
 
         try{
-            System.out.println(">> ");
+            System.out.printf(">> ");
             String userSelection = consoleReader.readLine();
 
             switch (userSelection){
