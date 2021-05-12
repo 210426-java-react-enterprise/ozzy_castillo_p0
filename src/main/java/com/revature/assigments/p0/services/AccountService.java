@@ -59,4 +59,14 @@ public class AccountService {
         return false;
     }
 
+    public boolean isValidWithdrawal(double amount, double balance){
+        if((balance-=amount) < 0)return false;
+
+        return true;
+    }
+
+    public boolean makeWithdrawal(int accountId, double amount){
+        return accountDAO.makeWithdrawal(accountId, amount);
+    }
+
 }

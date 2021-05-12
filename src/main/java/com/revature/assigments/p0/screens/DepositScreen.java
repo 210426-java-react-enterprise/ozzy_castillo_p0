@@ -74,17 +74,20 @@ public class DepositScreen extends Screen{
                         System.out.println("Your deposit was completed successfully!");
                     }
                      */
-                    if(AccountService.makeDeposit(userTracker.getUser().getAccounts().get(accountIndex).getId(),Double.parseDouble(amountToDeposit))){
+                    if(AccountService.makeDeposit(userTracker.getUser().getAccounts().get(accountIndex).getId(),Double.parseDouble(amountToDeposit)) && accountIndex != -1){
+
                         userTracker.getUser().getAccounts().get(accountIndex).addToBalance(Double.parseDouble(amountToDeposit));
                         System.out.println("Your deposit was completed successfully!");
+                    }else{
+                        throw new IllegalArgumentException("Invalid Selection!");
                     }
                 }else{
                     throw new IllegalArgumentException("Invalid Selection!");
                 }
 
             } catch (IllegalArgumentException e) {
-                //System.out.println(">>>>> Your selection is invalid, please use the Account #");
-                //this.render();
+                System.out.println(">>>>> Your selection is invalid, please use the Account #");
+                this.render();
                 e.printStackTrace();
             } catch (IOException e2){
                 e2.printStackTrace();

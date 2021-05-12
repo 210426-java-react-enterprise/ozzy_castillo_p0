@@ -180,5 +180,27 @@ public class AccountDAO {
 
     }
 
+    public boolean makeWithdrawal(int accountId, double amount) {
+
+        try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+            String sqlUpdateAccountBalance = "update p0_canaima.accounts set acct_balance = acct_balance - ? where acct_id = ?;";
+            PreparedStatement pstmt = conn.prepareStatement(sqlUpdateAccountBalance);
+            pstmt.setDouble(1, amount);
+            pstmt.setInt(2, accountId);
+
+            int rowsUpdated = pstmt.executeUpdate();
+            if(rowsUpdated!=0){
+                return true;
+            }
+
+            return false;
+
+        } catch(SQLException throwables){
+            throwables.printStackTrace();
+            return false;
+        }
+
+    }
+
 
 }

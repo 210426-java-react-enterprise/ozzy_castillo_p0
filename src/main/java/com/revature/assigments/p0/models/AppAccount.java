@@ -61,5 +61,7 @@ public class AppAccount {
         this.balance+=amount;
     }
 
+    public void subtractToBalance(double amount){this.balance-=amount;}
+
 
 }
