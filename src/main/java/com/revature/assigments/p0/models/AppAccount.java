@@ -57,5 +57,9 @@ public class AppAccount {
         this.balance = balance;
     }
 
+    public void addToBalance(double amount){
+        this.balance+=amount;
+    }
+
 
 }

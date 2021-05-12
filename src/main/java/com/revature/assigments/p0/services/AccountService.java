@@ -43,5 +43,20 @@ public class AccountService {
         return null;
     }
 
+    public boolean isValidDeposit(double amount){
+        if (amount > 0.00) return true;
+        return false;
+    }
+
+    public boolean makeDeposit(int accountId, double amount){
+        return accountDAO.makeDeposit(accountId, amount);
+    }
+
+    public boolean isValidAccountNumber(int accountNumber, ArrayList<AppAccount> userAccounts ){
+        for (int i = 0; i < userAccounts.size(); i++) {
+            if(userAccounts.get(i).getId() == accountNumber) return true;
+        }
+        return false;
+    }
 
 }

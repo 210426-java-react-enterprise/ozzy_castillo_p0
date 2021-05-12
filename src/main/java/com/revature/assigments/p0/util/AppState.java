@@ -38,7 +38,8 @@ public class AppState {
                 .addScreen(new SignInScreen(consoleReader, router, userService, accountService))
                 .addScreen(new TransactionScreen(consoleReader, router, userTracker))
                 .addScreen(new CreateAccountScreen(consoleReader, router, accountService, userTracker))
-                .addScreen(new CheckBalanceScreen(consoleReader, router, accountService ,userTracker)); // Here I can add more screens
+                .addScreen(new CheckBalanceScreen(consoleReader, router, accountService ,userTracker))
+                .addScreen(new DepositScreen(consoleReader, router, accountService ,userTracker)); // Here I can add more screens
 
         System.out.println("Application initialized!");
     }

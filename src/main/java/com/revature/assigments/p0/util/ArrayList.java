@@ -57,6 +57,13 @@ public class ArrayList<T> implements List<T> {
 
         }
 
+        public int indexOf(T data){
+            for (int i = 0; i < size; i++) {
+                if(iteArray[i].data.equals(data)) return i;
+            }
+            return -1;
+        }
+
     @Override
     public T remove(int index) {
         return null;

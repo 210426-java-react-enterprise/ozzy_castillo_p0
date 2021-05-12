@@ -30,10 +30,11 @@ public class TransactionScreen extends Screen{
         System.out.println("-------------------------------------");
         System.out.println("1.-Create Account");
         System.out.println("2.-Check Balance");
-        System.out.println("3.-Withdraw");
-        System.out.println("4.-Transfer");
-        System.out.println("5.-Transactions history");
-        System.out.println("6.-Exit Application");
+        System.out.println("3.-Deposit");
+        System.out.println("4.-Withdraw");
+        System.out.println("5.-Transfer");
+        System.out.println("6.-Transactions history");
+        System.out.println("7.-Exit Application");
 
 
         try{
@@ -48,7 +49,7 @@ public class TransactionScreen extends Screen{
                     router.navigate("/checkBalance", this.userTracker);
                     break;
                 case "3": //Deposit
-                    router.navigate("/withdrawal", this.userTracker);
+                    router.navigate("/deposit", this.userTracker);
                     break;
                 case "4": //Withdraw
                     router.navigate("/withdrawal", this.userTracker);

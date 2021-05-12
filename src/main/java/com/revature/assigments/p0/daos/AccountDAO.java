@@ -1,6 +1,7 @@
 package com.revature.assigments.p0.daos;
 
 import com.revature.assigments.p0.models.AppAccount;
+import com.revature.assigments.p0.models.AppUser;
 import com.revature.assigments.p0.util.ArrayList;
 import com.revature.assigments.p0.util.ConnectionFactory;
 import com.revature.assigments.p0.util.UserTracker;
@@ -123,11 +124,6 @@ public class AccountDAO {
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 
-            /*
-            String sqlFindUserAccounts = "select * from p0_canaima.accounts a " +
-                                            "inner join p0_canaima.user_accounts ua " +
-                                                "on a.acct_id = ua.acct_id where ua.user_id = ?;";
-            */
             String sqlFindUserAccounts = "select a.acct_id, at2.acct_type, a.acct_balance, c.curr_name " +
                                             "from p0_canaima.accounts a " +
                                             "left join p0_canaima.account_types at2 " +
@@ -161,5 +157,28 @@ public class AccountDAO {
 
         return userAccounts;
     }
+
+    public boolean makeDeposit(int accountId, double amount) {
+
+        try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+            String sqlUpdateAccountBalance = "update p0_canaima.accounts set acct_balance = acct_balance + ? where acct_id = ?;";
+            PreparedStatement pstmt = conn.prepareStatement(sqlUpdateAccountBalance);
+            pstmt.setDouble(1, amount);
+            pstmt.setInt(2, accountId);
+
+            int rowsUpdated = pstmt.executeUpdate();
+            if(rowsUpdated!=0){
+                return true;
+             }
+
+            return false;
+
+        } catch(SQLException throwables){
+            throwables.printStackTrace();
+            return false;
+        }
+
+    }
+
 
 }
