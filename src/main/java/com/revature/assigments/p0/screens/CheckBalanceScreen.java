@@ -42,6 +42,6 @@ public class CheckBalanceScreen extends Screen{
                     userTracker.getUser().getAccounts().get(i).getBalance());
         }
 
-        //accountType = consoleReader.readLine();
+        router.navigate("/transaction", this.userTracker);
     }
 }

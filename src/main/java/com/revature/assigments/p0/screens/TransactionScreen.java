@@ -47,16 +47,19 @@ public class TransactionScreen extends Screen{
                 case "2": //Check Balance
                     router.navigate("/checkBalance", this.userTracker);
                     break;
-                case "3": //Withdraw
-                    router.navigate("/withdrawal");
+                case "3": //Deposit
+                    router.navigate("/withdrawal", this.userTracker);
                     break;
-                case "4": //Transfer
+                case "4": //Withdraw
+                    router.navigate("/withdrawal", this.userTracker);
+                    break;
+                case "5": //Transfer
                     router.navigate("/transfer");
                     break;
-                case "5": //Transaction history
+                case "6": //Transaction history
                     router.navigate("/transactionHistory");
                     break;
-                case "6": // Exit App
+                case "7": // Exit App
                     app().setAppRunning(false);
                     break;
                 default:
