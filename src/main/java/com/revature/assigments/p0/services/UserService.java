@@ -19,6 +19,12 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
+    /**
+     * This method is responsible to validate and register the user info
+     * @param newUser -- user info coming from user inputs
+     * @throws invalidRequestedException -- this me
+     * @throws ResourcesPersistanceException
+     */
     public void signUp(AppUser newUser) throws invalidRequestedException, ResourcesPersistanceException{
         //Insert my business logic validations
         if(!isUserValid(newUser)){
@@ -47,6 +53,18 @@ public class UserService {
         userDAO.save(newUser);
     }
 
+    public AppUser signIn(String username, String password){
+        AppUser user = null;
+
+        if (username == null || username.trim().isEmpty() || username.trim().length() > 25) {
+            throw new invalidRequestedException("Invalid user data provided!");
+        }
+
+        user = userDAO.findUserByUsernameAndPassword(username, password);
+
+        return user;
+    }
+
     //Method to validate the data from the user with the requirements from the users' table from my DB
     public boolean isUserValid(AppUser user){
         if (user == null) return false;
@@ -70,18 +88,5 @@ public class UserService {
         java.util.regex.Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-
-    public AppUser signIn(String username, String password){
-        AppUser user = null;
-
-        if (username == null || username.trim().isEmpty() || username.trim().length() > 25) {
-            throw new invalidRequestedException("Invalid user data provided!");
-        }
-
-        user = userDAO.findUserByUsernameAndPassword(username, password);
-
-        return user;
-    }
-
 
 }
